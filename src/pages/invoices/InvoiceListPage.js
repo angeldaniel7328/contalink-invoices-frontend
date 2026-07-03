@@ -8,11 +8,7 @@ import Loading from "../../components/Loading";
 
 import { getInvoices } from "../../services/invoiceService";
 
-/**
- * Página principal para la consulta de facturas.
- */
 function InvoiceListPage() {
-    // Estado que almacena los filtros de búsqueda.
     const [filters, setFilters] = useState({
         start_date: "",
         end_date: "",
@@ -20,21 +16,14 @@ function InvoiceListPage() {
         page_size: 10,
     });
 
-    // Estado que almacena las facturas obtenidas de la API.
     const [invoices, setInvoices] = useState([]);
 
-    // Estado que almacena la información de paginación.
     const [pagination, setPagination] = useState(null);
 
-    // Estado que indica si existe una petición en proceso.
     const [loading, setLoading] = useState(false);
 
-    // Estado que almacena el mensaje de error.
     const [error, setError] = useState("");
 
-    /**
-     * Inicializa el rango de fechas con el año actual.
-     */
     useEffect(() => {
         const today = new Date();
         const year = today.getFullYear();
@@ -46,18 +35,11 @@ function InvoiceListPage() {
         }));
     }, []);
 
-    /**
-     * Consulta las facturas cada vez que cambia alguno de los filtros.
-     */
     useEffect(() => {
-        // Evita realizar la consulta mientras no existan ambas fechas.
         if (!filters.start_date || !filters.end_date) {
             return;
         }
 
-        /**
-         * Obtiene las facturas desde la API.
-         */
         const fetchInvoices = async () => {
             try {
                 setLoading(true);
@@ -77,9 +59,6 @@ function InvoiceListPage() {
         fetchInvoices();
     }, [filters]);
 
-    /**
-     * Reinicia la paginación y ejecuta una nueva búsqueda.
-     */
     const handleSearch = () => {
         setFilters((previous) => ({
             ...previous,
@@ -87,11 +66,6 @@ function InvoiceListPage() {
         }));
     };
 
-    /**
-     * Actualiza la página seleccionada.
-     *
-     * @param {number} page Número de página.
-     */
     const handlePageChange = (page) => {
         setFilters((previous) => ({
             ...previous,
@@ -111,14 +85,12 @@ function InvoiceListPage() {
                 onSearch={handleSearch}
             />
 
-            {/* Muestra el mensaje de error en caso de existir */}
             {error && (
                 <div className="alert alert-danger mt-3">
                     {error}
                 </div>
             )}
 
-            {/* Muestra un indicador de carga mientras se consulta la API */}
             {loading ? (
                 <Loading />
             ) : (

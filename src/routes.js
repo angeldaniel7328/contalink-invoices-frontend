@@ -8,17 +8,12 @@ import MainPage from "./pages/MainPage";
 
 import { isAuthenticated } from "./utils/authStorage";
 
-/**
- * Define las rutas de navegación de la aplicación.
- */
 function AppRoutes() {
-    // Indica si el usuario se encuentra autenticado.
     const authenticated = isAuthenticated();
 
     return (
         <Routes>
 
-            {/* Redirección a la página correspondiente según el estado de autenticación */}
             <Route
                 path="/"
                 element={
@@ -29,7 +24,6 @@ function AppRoutes() {
                 }
             />
 
-            {/* Página de inicio de sesión */}
             <Route
                 path="/login"
                 element={
@@ -39,7 +33,6 @@ function AppRoutes() {
                 }
             />
 
-            {/* Página principal */}
             <Route
                 path="/main"
                 element={
@@ -49,7 +42,6 @@ function AppRoutes() {
                 }
             />
 
-            {/* Consulta de facturas */}
             <Route
                 path="/invoices"
                 element={
@@ -59,7 +51,6 @@ function AppRoutes() {
                 }
             />
 
-            {/* Redirección para rutas no existentes */}
             <Route
                 path="*"
                 element={

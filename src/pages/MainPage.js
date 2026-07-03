@@ -1,13 +1,9 @@
 import { Link } from "react-router-dom";
 
-/**
- * Página principal de la aplicación.
- */
 function MainPage() {
     return (
         <div className="container mt-4">
 
-            {/* Tarjeta de bienvenida */}
             <div className="p-5 mb-4 bg-light rounded-3 border">
                 <div className="container-fluid py-3">
 
@@ -22,7 +18,6 @@ function MainPage() {
                         paginación.
                     </p>
 
-                    {/* Acceso a la consulta de facturas */}
                     <Link
                         to="/invoices"
                         className="btn btn-primary btn-lg"
