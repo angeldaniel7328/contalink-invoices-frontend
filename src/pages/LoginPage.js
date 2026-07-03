@@ -3,14 +3,29 @@ import { useNavigate } from "react-router-dom";
 
 import { login } from "../services/authService";
 
+/**
+ * Página de autenticación de la aplicación.
+ */
 function LoginPage() {
     const navigate = useNavigate();
 
+    // Estado que almacena el nombre de usuario.
     const [username, setUsername] = useState("");
+
+    // Estado que almacena la contraseña.
     const [password, setPassword] = useState("");
+
+    // Estado que indica si la autenticación está en proceso.
     const [loading, setLoading] = useState(false);
+
+    // Estado que almacena el mensaje de error.
     const [error, setError] = useState("");
 
+    /**
+     * Autentica al usuario y redirige a la página principal.
+     *
+     * @param {Object} event Evento del formulario.
+     */
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -19,7 +34,11 @@ function LoginPage() {
 
         try {
             await login(username, password);
+
             navigate("/main", { replace: true });
+
+            // Recarga la aplicación para actualizar los componentes
+            // que dependen del estado de autenticación.
             window.location.reload();
         } catch (error) {
             setError(error.message);
@@ -34,10 +53,12 @@ function LoginPage() {
                 <div className="col-md-5">
                     <div className="card shadow">
                         <div className="card-body">
+
                             <h3 className="text-center mb-4">
                                 Iniciar sesión
                             </h3>
 
+                            {/* Muestra el mensaje de error cuando la autenticación falla */}
                             {error && (
                                 <div className="alert alert-danger">
                                     {error}
@@ -45,6 +66,8 @@ function LoginPage() {
                             )}
 
                             <form onSubmit={handleSubmit}>
+
+                                {/* Campo de usuario */}
                                 <div className="mb-3">
                                     <label className="form-label">
                                         Usuario
@@ -61,6 +84,7 @@ function LoginPage() {
                                     />
                                 </div>
 
+                                {/* Campo de contraseña */}
                                 <div className="mb-4">
                                     <label className="form-label">
                                         Contraseña
@@ -77,6 +101,7 @@ function LoginPage() {
                                     />
                                 </div>
 
+                                {/* Botón para iniciar sesión */}
                                 <button
                                     type="submit"
                                     className="btn btn-primary w-100"
@@ -86,7 +111,9 @@ function LoginPage() {
                                         ? "Autenticando..."
                                         : "Iniciar sesión"}
                                 </button>
+
                             </form>
+
                         </div>
                     </div>
                 </div>

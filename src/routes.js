@@ -6,30 +6,40 @@ import InvoiceListPage from "./pages/invoices/InvoiceListPage";
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 
+import { isAuthenticated } from "./utils/authStorage";
+
+/**
+ * Define las rutas de navegación de la aplicación.
+ */
 function AppRoutes() {
-    const isAuthenticated = !!sessionStorage.getItem("token");
+    // Indica si el usuario se encuentra autenticado.
+    const authenticated = isAuthenticated();
 
     return (
         <Routes>
+
+            {/* Redirección a la página correspondiente según el estado de autenticación */}
             <Route
                 path="/"
                 element={
                     <Navigate
-                        to={isAuthenticated ? "/main" : "/login"}
+                        to={authenticated ? "/main" : "/login"}
                         replace
                     />
                 }
             />
 
+            {/* Página de inicio de sesión */}
             <Route
                 path="/login"
                 element={
-                    isAuthenticated
+                    authenticated
                         ? <Navigate to="/main" replace />
                         : <LoginPage />
                 }
             />
 
+            {/* Página principal */}
             <Route
                 path="/main"
                 element={
@@ -39,6 +49,7 @@ function AppRoutes() {
                 }
             />
 
+            {/* Consulta de facturas */}
             <Route
                 path="/invoices"
                 element={
@@ -48,15 +59,17 @@ function AppRoutes() {
                 }
             />
 
+            {/* Redirección para rutas no existentes */}
             <Route
                 path="*"
                 element={
                     <Navigate
-                        to={isAuthenticated ? "/main" : "/login"}
+                        to={authenticated ? "/main" : "/login"}
                         replace
                     />
                 }
             />
+
         </Routes>
     );
 }

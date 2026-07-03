@@ -1,5 +1,17 @@
+/**
+ * Componente que muestra la tabla de facturas obtenidas de la API.
+ *
+ * @param {Object} props Propiedades del componente.
+ * @param {Array} props.invoices Lista de facturas a mostrar.
+ */
 function InvoiceTable({ invoices }) {
 
+    /**
+     * Formatea una fecha al formato dd/MM/yyyy HH:mm.
+     *
+     * @param {string} date Fecha a formatear.
+     * @returns {string} Fecha con formato legible.
+     */
     const formatDate = (date) => {
         return new Intl.DateTimeFormat("es-MX", {
             day: "2-digit",
@@ -10,6 +22,12 @@ function InvoiceTable({ invoices }) {
         }).format(new Date(date));
     };
 
+    /**
+     * Obtiene la clase Bootstrap correspondiente al estatus de la factura.
+     *
+     * @param {string} status Estatus de la factura.
+     * @returns {string} Clase CSS del badge.
+     */
     const getStatusBadge = (status) => {
         switch (status.toLowerCase()) {
             case "vigente":
@@ -26,6 +44,7 @@ function InvoiceTable({ invoices }) {
         }
     };
 
+    // Muestra un mensaje cuando la consulta no devuelve resultados.
     if (!invoices.length) {
         return (
             <div className="alert alert-info">
@@ -37,6 +56,8 @@ function InvoiceTable({ invoices }) {
     return (
         <div className="table-responsive">
             <table className="table table-hover align-middle">
+
+                {/* Encabezado de la tabla */}
                 <thead className="table-dark">
                 <tr>
                     <th>Factura</th>
@@ -47,13 +68,17 @@ function InvoiceTable({ invoices }) {
                 </tr>
                 </thead>
 
+                {/* Cuerpo de la tabla */}
                 <tbody>
                 {invoices.map((invoice) => (
                     <tr key={invoice.id}>
+
+                        {/* Número de factura */}
                         <td className="fw-semibold">
                             {invoice.invoice_number}
                         </td>
 
+                        {/* Importe total */}
                         <td>
                             {new Intl.NumberFormat("es-MX", {
                                 style: "currency",
@@ -61,8 +86,12 @@ function InvoiceTable({ invoices }) {
                             }).format(invoice.total)}
                         </td>
 
-                        <td>{formatDate(invoice.invoice_date)}</td>
+                        {/* Fecha de la factura */}
+                        <td>
+                            {formatDate(invoice.invoice_date)}
+                        </td>
 
+                        {/* Estatus de la factura */}
                         <td>
                                 <span
                                     className={`badge ${getStatusBadge(
@@ -73,6 +102,7 @@ function InvoiceTable({ invoices }) {
                                 </span>
                         </td>
 
+                        {/* Indica si la factura se encuentra activa */}
                         <td>
                             {invoice.active ? (
                                 <span className="badge bg-success">
@@ -84,9 +114,11 @@ function InvoiceTable({ invoices }) {
                                     </span>
                             )}
                         </td>
+
                     </tr>
                 ))}
                 </tbody>
+
             </table>
         </div>
     );

@@ -1,5 +1,18 @@
+/**
+ * Componente que muestra los filtros de búsqueda para la consulta de facturas.
+ *
+ * @param {Object} props Propiedades del componente.
+ * @param {Object} props.filters Filtros actuales de búsqueda.
+ * @param {Function} props.setFilters Función para actualizar los filtros.
+ * @param {Function} props.onSearch Función que ejecuta la búsqueda.
+ */
 function InvoiceFilters({ filters, setFilters, onSearch }) {
 
+    /**
+     * Actualiza el valor del filtro modificado por el usuario.
+     *
+     * @param {Object} event Evento del componente.
+     */
     const handleChange = ({ target }) => {
         setFilters((previous) => ({
             ...previous,
@@ -12,6 +25,7 @@ function InvoiceFilters({ filters, setFilters, onSearch }) {
             <div className="card-body">
                 <div className="row">
 
+                    {/* Fecha inicial */}
                     <div className="col-md-3">
                         <label className="form-label">
                             Fecha inicial
@@ -26,6 +40,7 @@ function InvoiceFilters({ filters, setFilters, onSearch }) {
                         />
                     </div>
 
+                    {/* Fecha final */}
                     <div className="col-md-3">
                         <label className="form-label">
                             Fecha final
@@ -40,6 +55,7 @@ function InvoiceFilters({ filters, setFilters, onSearch }) {
                         />
                     </div>
 
+                    {/* Cantidad de registros por página */}
                     <div className="col-md-2">
                         <label className="form-label">
                             Registros
@@ -58,6 +74,7 @@ function InvoiceFilters({ filters, setFilters, onSearch }) {
                         </select>
                     </div>
 
+                    {/* Botón para ejecutar la búsqueda */}
                     <div className="col-md-2 d-flex align-items-end">
                         <button
                             className="btn btn-primary w-100"
